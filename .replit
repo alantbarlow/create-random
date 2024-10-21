@@ -1,4 +1,4 @@
-entrypoint = "__main__.py"
+entrypoint = "src/__main__.py"
 modules = ["python-3.11"]
 
 [nix]

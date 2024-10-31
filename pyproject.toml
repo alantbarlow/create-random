@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "python-template"
+name = "create-random"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "A basic script for creating random codes, passwords, and more."
+authors = ["Alan Barlow <alantbarlow@gmail.com>"]
+packages = [{include = "create-random"}]
 
 [tool.poetry.dependencies]
 python = "^3.7.0"

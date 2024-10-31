@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "create-random"
-version = "0.1.0"
+version = "0.2.0"
 description = "A basic script for creating random codes, passwords, and more."
 authors = ["Alan Barlow <alantbarlow@gmail.com>"]
 packages = [{include = "create-random"}]

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "create-random"
-version = "0.2.0"
+version = "0.3.0"
 description = "A basic script for creating random codes, passwords, and more."
 authors = ["Alan Barlow <alantbarlow@gmail.com>"]
 packages = [{include = "create-random"}]
@@ -8,15 +8,10 @@ packages = [{include = "create-random"}]
 [tool.poetry.dependencies]
 python = "^3.7.0"
 
-[tool.pyright]
-# https://github.com/microsoft/pyright/blob/main/docs/configuration.md
-useLibraryCodeForTypes = true
-exclude = [".cache"]
-
 [tool.ruff]
 # https://beta.ruff.rs/docs/configuration/
 select = ['E', 'W', 'F', 'I', 'B', 'C4', 'ARG', 'SIM']
-ignore = ['W291', 'W292', 'W293']
+ignore = ['W291', 'W292', 'W293', 'E501']
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

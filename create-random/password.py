@@ -1,31 +1,54 @@
 import random
 import string
 
+
 class Password:
+    def __init__(
+        self,
+        length: int,
+        exclude_special_chars: bool = False,
+        exclude_uppercase_chars: bool = False,
+        exclude_numbers: bool = False,
+    ):
+        if length < 8:
+            raise ValueError("The length of the password must be at least 8 characters")
 
-  def __init__(self, length:int, exclude_special_chars:bool = False, exclude_uppercase_chars:bool = False, exclude_numbers:bool = False):
-    self.__length = length
+        self.__length = length
 
-    self.__character_options: dict[str, list[str]] = {
-        "Lowercase Letters": list(string.ascii_lowercase),
-        "Uppercase Letters": [] if exclude_uppercase_chars else list(string.ascii_uppercase),
-        "Numbers": [] if exclude_numbers else list(string.digits),
-        "Special Characters": [] if exclude_special_chars else [".", ",", "-", "_", "@"]
-    }
+        self.__character_options: dict[str, list[str]] = {
+            "lowercase": list(string.ascii_lowercase),
+            "uppercase": []
+            if exclude_uppercase_chars
+            else list(string.ascii_uppercase),
+            "digits": [] if exclude_numbers else list(string.digits),
+            "special": [] if exclude_special_chars else [".", ",", "-", "_", "@"],
+        }
 
-  def generate(self) -> str:
-    new_password = ""
+    def generate(self) -> str:
+        chosen_chars: list[str] = (
+            self.__character_options["lowercase"]
+            + self.__character_options["uppercase"]
+        )
+        password: str = random.choice(chosen_chars)
+        available_char_types: list[str] = [
+            key
+            for key in self.__character_options
+            if (self.__character_options[key] != [])
+        ]
 
-    for _ in range(self.__length):
-      characters: list[str] = []
+        while len(password) < self.__length:
+            chosen_chars = []
+            char_types: list[str] = available_char_types.copy()
 
-      if (new_password == ""):
-        characters.extend(self.__character_options["Uppercase Letters"])
-        characters.extend(self.__character_options["Lowercase Letters"])
+            # Decrease likelihood of special characters by making a 60% chance to remove them as an option
+            if ("special" in char_types) and (random.random() <= 0.6):
+                char_types.remove("special")
 
-      while (characters == []):
-        characters.extend(random.choice(list(self.__character_options.values())))
+            chosen_char_type: str = random.choice(char_types)
 
-      new_password += random.choice(characters)
+            chosen_chars.extend(self.__character_options[chosen_char_type])
 
-    return new_password
+            if chosen_chars != []:
+                password += random.choice(chosen_chars)
+
+        return password

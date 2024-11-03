@@ -12,6 +12,7 @@ class Parser:
         password_parser.add_argument("--no-numbers", "-n", action = "store_true", dest = "numbers", help = "Exclude numbers from the password")
         password_parser.add_argument("--no-special", "-s", action = "store_true", dest = "special", help = "Exclude special characters from the password")
         password_parser.add_argument("--no-uppercase", "-u", action = "store_true", dest = "uppercase", help = "Exclude uppercase characters from the password")
+        password_parser.add_argument("--allow-consecutive", "-c", action = "store_true", dest = "consecutive", help = "Allow consecutive individual characters in the password")
 
         # The subparser for the 'passcode' command
         passcode_parser = subparsers.add_parser("passcode", help = "Output a random passcode with a given number of digets")

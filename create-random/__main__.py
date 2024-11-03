@@ -13,6 +13,7 @@ def run_program():
             exclude_uppercase_chars=args.uppercase,
             exclude_special_chars=args.special,
             exclude_numbers=args.numbers,
+            allow_consecutive_chars=args.consecutive,
         )
         print(password.generate())
 

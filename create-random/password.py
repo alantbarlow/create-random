@@ -6,7 +6,7 @@ class Password:
     def __init__(
         self,
         length: int,
-        exclude_special_chars: bool = False,
+        custom_special_chars: list[str] = None,
         exclude_uppercase_chars: bool = False,
         exclude_numbers: bool = False,
         allow_consecutive_chars: bool = False,
@@ -23,7 +23,7 @@ class Password:
             if exclude_uppercase_chars
             else list(string.ascii_uppercase),
             "digits": [] if exclude_numbers else list(string.digits),
-            "special": [] if exclude_special_chars else [".", ",", "-", "_", "@"],
+            "special": custom_special_chars if custom_special_chars is not None else list(string.punctuation),
         }
 
     def generate(self) -> str:

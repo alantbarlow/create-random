@@ -27,11 +27,10 @@ class Password:
         }
 
     def generate(self) -> str:
-        chosen_chars: list[str] = (
+        password: str = random.choice(
             self.__character_options["lowercase"]
             + self.__character_options["uppercase"]
         )
-        password: str = random.choice(chosen_chars)
         available_char_types: list[str] = [
             key
             for key in self.__character_options

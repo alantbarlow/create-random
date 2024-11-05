@@ -39,22 +39,44 @@ class Password:
         ]
         previously_chosen_char_type: str = "uppercase"
 
+        # Create a list of each index within the range of character length, and then assign a random index to be a 
+        # guarenteed character type and remove that option from the index. Repeat for each character type
+        range_list: list[int] = list(range(2, self.__length + 1))
+        guarenteed_lowercase_index: int = random.choice(range_list)
+        range_list.remove(guarenteed_lowercase_index)
+        guarenteed_uppercase_index: int = random.choice(range_list)
+        range_list.remove(guarenteed_uppercase_index)
+        guarenteed_special_index: int = random.choice(range_list)
+        range_list.remove(guarenteed_special_index)
+        guarenteed_digit_index: int = random.choice(range_list)
+        range_list.remove(guarenteed_digit_index)
+
         while len(password) < self.__length:
-            chosen_chars = []
-            char_types: list[str] = available_char_types.copy()
+            chosen_char_type: str = None
 
-            # Decrease likelihood of consecutive character types by making a 30% chance to remove them as an option
-            if (len(char_types) > 1) and (random.random() <= 0.3):
-                char_types.remove(previously_chosen_char_type)
+            if (len(password) == guarenteed_lowercase_index - 1):
+                chosen_char_type = "lowercase"
+            elif ("uppercase" in available_char_types) and (len(password) == guarenteed_uppercase_index - 1):
+                chosen_char_type = "uppercase"
+            elif ("special" in available_char_types) and (len(password) == guarenteed_special_index - 1):
+                chosen_char_type = "special"
+            elif ("digits" in available_char_types) and (len(password) == guarenteed_digit_index - 1):
+                chosen_char_type = "digits"
+            else:
+                char_types: list[str] = available_char_types.copy()
 
-            # Decrease likelihood of special characters by making a 60% chance to remove them as an option
-            if ("special" in char_types) and (random.random() <= 0.6):
-                char_types.remove("special")
+                # Decrease likelihood of consecutive character types by making a 30% chance to remove them as an option
+                if (len(char_types) > 1) and (random.random() <= 0.3):
+                    char_types.remove(previously_chosen_char_type)
 
-            chosen_char_type: str = random.choice(char_types)
+                # Decrease likelihood of special characters by making a 60% chance to remove them as an option
+                if ("special" in char_types) and (random.random() <= 0.6):
+                    char_types.remove("special")
+
+                chosen_char_type: str = random.choice(char_types)
+            
             previously_chosen_char_type = chosen_char_type
-
-            chosen_chars.extend(self.__character_options[chosen_char_type])
+            chosen_chars: list[str] = self.__character_options[chosen_char_type]
             next_char: str = random.choice(chosen_chars)
 
             if (self.__allow_consecutive) or (next_char != password[-1]):
